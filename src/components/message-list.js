@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import Api from '../api'
+import Message from './message'
 
 class MessageList extends React.PureComponent {
   constructor(...args) {
@@ -29,7 +30,6 @@ class MessageList extends React.PureComponent {
       ],
     }, () => {
       // Included to support initial direction. Please remove upon completion
-      console.log(messages)
     })
   }
 
@@ -42,6 +42,11 @@ class MessageList extends React.PureComponent {
     }
     this.forceUpdate()
   }
+  clear = () => {
+    this.setState({
+      messages: []
+    })
+  }
 
   render() {
     const isApiStarted = this.api.isStarted()
@@ -53,6 +58,8 @@ class MessageList extends React.PureComponent {
         >
           {isApiStarted ? 'Stop Messages' : 'Start Messages'}
         </Button>
+        <Button onClick={this.clear} style={{color:'red', margin:'10px'}}>Clear</Button>
+        <Message messages={this.state.messages} />
       </div>
     )
   }
